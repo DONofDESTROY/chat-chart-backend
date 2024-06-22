@@ -32,8 +32,7 @@ export default asyncHandler(async (req, res, next) => {
     thread.id,
     {
       role: "user",
-      content:
-        'Update this JSON `{"template": "bar", "sorting": {"type": "descending"}, "ranking": {"type": "top", "count": 5}}` with this prompt `sort the chart in ascending and show the bottom 2`',
+      content: updatedPrompt,
     }
   );
 
@@ -50,6 +49,7 @@ export default asyncHandler(async (req, res, next) => {
     });
   } else {
     console.log(`${chalk.bgRed.black("Get: ")} Failed`);
+
     res.status(400).json({
       success: false,
       config: {},

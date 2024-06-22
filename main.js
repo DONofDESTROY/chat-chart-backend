@@ -13,8 +13,7 @@ const init = async () => {
 
   console.log(`${chalk.bgGreen("Init open ai:")} config`);
   const aiService = AIService.getInstance();
-  await aiService.createAssistant();
-  await aiService.createThread();
+  await aiService.init();
   console.log(`${chalk.bgGreen("open ai loaded:")} config`);
 
   const app = express();

@@ -23,6 +23,16 @@ export class AIService {
     return this.instance;
   };
 
+  init = async () => {
+    await this.createAssistant();
+    await this.createThread();
+  };
+
+  //   reInitializeItems = async () => {
+  //     this.instance = new AIService();
+  //     await init();
+  //   };
+
   createAssistant = async () => {
     const assistant = await this.openai.beta.assistants.create({
       name: "Config generator",
@@ -47,7 +57,8 @@ export class AIService {
                   properties: {
                     type: {
                       type: "string",
-                      description: "sorting type",
+                      description:
+                        "sorting type, ascending for smaller to larger value, descending for large to small value, off for none of the sorting",
                       enum: ["ascending", "off", "descending"],
                     },
                   },
@@ -57,7 +68,8 @@ export class AIService {
                   properties: {
                     type: {
                       type: "string",
-                      description: "ranking type",
+                      description:
+                        "ranking type, top for picking items on the first, bottom for picking the last items, off for picking all the items ",
                       enum: ["top", "bottom", "off"],
                     },
                     count: {
@@ -127,6 +139,7 @@ export class AIService {
         let messages = await this.openai.beta.threads.messages.list(
           this.thread.id
         );
+        console.log();
         return messages.data[0].content[0].text;
       } else if (run.status === "requires_action") {
         console.log(run.status);
